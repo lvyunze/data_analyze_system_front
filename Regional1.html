@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>就业地区分布统计</title>
+	<link rel="stylesheet" href="css/page.css" />
+	<link rel="stylesheet" href="css/Regional1.css" />
+	<script type="text/javascript" src="js/jquery.min.js" ></script>
+	<script type="text/javascript" src="js/index.js" ></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+    <!--  链接表格 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="left">
+			<div class="bigTitle">招生就业统计分析</div>
+			<div class="lines">
+				<div  class="active"><img src="img/icon-1.png" /><a href="index.html" style="color: #FFF;text-decoration: none">首页</a></div>
+				<div id="button"><img src="img/icon-4.png" />就业地区分布统计</div>
+				<div ><img src="img/icon-3.png" /><a href="Unit.html" style="color: #FFF;text-decoration: none">就业单位统计</a></div>
+				<div ><img src="img/icon-2.png" /><a href="Industy.html" style="color: #FFF;text-decoration: none">就业行业统计</a></div>
+				<div ><img src="img/icon-5.png" /><a href="Occupation.html" style="color: #FFF;text-decoration: none">就业职业统计</a></div>
+			</div>
+		</div>
+		<div class="top">
+			<div class="leftTiyle" id="flTitle">就业地区分布</div>
+			<div class="thisUser">当前用户：777</div>
+		</div>
+
+		<div class="big-box">
+			  <div id="main" class="box-left" style="width: 40%;height:500px;"></div>
+			  <div id="main" class="box-center" style="width: 15%;height:500px;"><table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>城市</th>
+			<th>占比</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>广州</td>
+			<td id="gz"></td>
+		</tr>
+		<tr>
+			<td>湛江</td>
+			<td id="zhanjiang"></td>
+		</tr>
+		
+		<tr>
+			<td>深圳</td>
+			<td id="shenzhen"></td>
+		</tr>
+		<tr>
+			<td>佛山</td>
+			<td id="foshan"></td>
+		</tr>
+		<tr>
+			<td>东莞</td>
+			<td id="dongguan"></td>
+		</tr>
+		  <tr>
+            <td>中山</td>
+            <td id="zhongshan"></td>
+        </tr>
+	    <tr>
+			<td>茂名</td>
+			<td id="maoming"></td>
+		</tr>
+		<tr>
+			<td>江门</td>
+			<td id="jiangmen"></td>
+		</tr>		
+		<tr>
+			<td>阳江</td>
+			<td id="yangjiang"></td>
+		</tr>
+		
+        <tr>
+            <td>肇庆</td>
+            <td id="zhaoqing"></td>
+        </tr>
+      
+	</tbody>
+</table>
+</div>
+			  <div class="big-box-right" style="width: 40%;height:500px;">
+			 	 <div id="main1" class="box-right" style="width: 100%;height:400px;"></div>
+			 	 <div class="box-right1" style="width: 100%;height:100px;"><table class="table">
+    <tbody>
+        <tr class="active">
+            <td>广东省内</td>
+            <td id ="gd"></td>            
+        </tr>       
+        <tr  class="danger">
+            <td>其他地区</td>
+            <td id="other"></td>        
+        </tr>
+    </tbody>
+</table></div>
+			  </div>
+		</div>
+
+		<script type="text/javascript">
+	$(function(){
+			 $.ajax({
+				url: 'http://127.0.0.1:5000/area_data/',
+				type: 'get',        
+				async:false,
+				success: function (data) {
+				   var strJSON = data
+				   var obj = new Function("return" + strJSON)();//转换后的JSON对象  
+				   console.log(obj.gd_area,obj.other_area,typeof obj.gd_area_num,obj.other_area_num);
+				   $('#gd').html(obj.gd_area);
+				   $('#other').html(obj.other_area);
+				  // 基于准备好的dom，初始化echarts实例
+				var myChart = echarts.init(document.getElementById('main1'));
+
+				// 指定图表的配置项和数据
+				var option = {
+			title : {
+				text: '就业地区分布',
+				/*subtext: '纯属虚构',*/
+				x:'center'
+			},
+			tooltip : {
+				trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			toolbox: {
+				feature: {
+					saveAsImage: {}
+				}
+			},
+			legend: {
+				orient: 'vertical',
+				left: 'left',
+				data: ['广东省','其他地区']
+			},
+			series : [
+				{
+					name: '地区分布',
+					type: 'pie',
+					radius : '55%',
+					center: ['50%', '60%'],
+					data:[
+						{value:obj.gd_area_num, name:'广东省'},
+						{value:obj.other_area_num, name:'其他地区'},
+						
+					],
+					//新加的内容
+		   label: {
+						normal: {
+							show: true,
+							/*position:'inside',*/
+							formatter: '{b}({d}%)' //自定义显示格式(b:name, c:value, d:百分比)
+						}
+
+					},
+
+
+			//新加的内容结束
+
+					itemStyle: {
+						emphasis: {
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(0, 0, 0, 0.5)'
+						}
+					}
+
+				}
+			]
+		};
+		 // 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+				}
+				
+		});
+		$.ajax({
+					url: 'http://127.0.0.1:5000/city_data/',
+					type: 'get',        
+					async:false,
+					success: function (data){
+					   var strJSON = data
+					   var obj = new Function("return" + strJSON)();//转换后的JSON对象  
+						var myChart = echarts.init(document.getElementById('main'));
+						  $('#gz').html(obj.city_pre.guangzhou);
+						  $('#zhanjiang').html(obj.city_pre.zhanjiang);
+						  $('#shenzhen').html(obj.city_pre.shenzhen);
+						  $('#foshan').html(obj.city_pre.fosan);
+						  $('#dongguan').html(obj.city_pre.dongguan);						  
+						  $('#zhongshan').html(obj.city_pre.zhongshan);
+						  $('#maoming').html(obj.city_pre.maoming);
+						  $('#jiangmen').html(obj.city_pre.jiangmen);
+						  $('#yangjiang').html(obj.city_pre.yangjiang);
+                          $('#zhaoqing').html(obj.city_pre.zhaoqing);
+						var option = {
+						title: {
+							text: '省内就业城市分布'
+						},
+						tooltip : {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'cross',
+								label: {
+									backgroundColor: '#6a7985'
+								}
+							}
+						},
+						toolbox: {
+							feature: {
+								saveAsImage: {}
+							}
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						xAxis : [
+							{
+								type : 'category',
+								boundaryGap : false,
+								data : ['广州','湛江','深圳','佛山','东莞','中山','茂名','江门','阳江','肇庆']
+							}
+						],
+						yAxis : [
+							{
+								type : 'value'
+							}
+						],
+						series : [
+							
+							{
+								name:'总人数',
+								type:'line',
+								stack: '总量',
+								label: {
+									normal: {
+										show: true,
+										position: 'top',
+										 formatter: '{c}%'
+									}
+								},
+								areaStyle: {normal: {}},
+								data:[obj.city_to_pre.guangzhou,obj.city_to_pre.zhanjiang, obj.city_to_pre.shenzhen,obj.city_to_pre.fosan,obj.city_to_pre.dongguan,obj.city_to_pre.zhongshan,obj.city_to_pre.maoming,obj.city_to_pre.jiangmen,obj.city_to_pre.yangjiang,obj.city_to_pre.zhaoqing]
+							}
+					 ]
+							
+					};
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);
+						   }
+								  
+			})
+
+})
+		</script>
+	
+</body>
+</html>

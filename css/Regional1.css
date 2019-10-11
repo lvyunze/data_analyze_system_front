@@ -1,0 +1,31 @@
+.big-box{
+	float: right; 
+	width: 75%;
+    border: 1px solid white; 
+   background: #fff; 
+	margin-top: 50px; 
+    margin-right:2%;
+     padding: 19px 18px;
+    box-shadow: 0px 6px 10px 5px rgba(217, 217, 217, .8);
+}
+.box-left{
+	float: left; 
+ /*    border: 1px solid red; */
+}
+.box-center{
+	float: left; 
+	padding-left: 20px;
+	padding-top: 5%;
+ /*    border: 1px solid red; */
+}
+.big-box-right{
+	float: right; 
+}
+.box-right{
+	
+  /*   border: 1px solid red; */
+}
+.box-right1{
+	padding-left: 35px;
+   /*  border: 1px solid red; */
+}

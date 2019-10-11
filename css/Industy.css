@@ -1,0 +1,147 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+ .left {
+    background: #313541;
+    width: 20%;
+    float: left;
+    top: 0px;
+    bottom: 0px;
+     height: 720px;  
+} 
+
+.top {
+    width: 80%;
+    float: right;
+    height: 100px;
+    line-height: 100px;
+    border-bottom: 1px solid #b0cdff;
+}
+
+
+
+.content {
+    float: right; 
+    width: 70%;
+    border: 1px solid white;
+    background: #fff;
+    margin-top: 50px; 
+    margin-right:4%;
+    padding: 19px 18px;
+    box-shadow: 0px 6px 10px 5px rgba(217, 217, 217, .8);
+}
+/* .box{
+    margin-top: 20%;
+    margin-left: 40%;
+    width: 40%;
+    height: 500px;
+    background-color: white;
+    box-shadow: 0px 0px 10px #666;
+} */
+
+
+.leftTiyle {
+    font-size: 25px;
+    padding-left: 30px; 
+    text-align: center;
+    font-weight: 600;
+    color: #545454;
+    float: left;
+}
+
+.thisUser {
+    float: right;
+    margin-right: 30px;
+}
+
+.bigTitle {
+    background: #3d598a;
+    color: #fff;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 24px;
+    font-family: -webkit-body;
+}
+
+.lines .active {
+    background: #272a34;
+    color: #fff;
+}
+.lines img{
+    width: 23px;
+    vertical-align: middle;
+    margin-bottom: 4px;
+    margin-right: 9px;
+}
+.lines div {
+    height: 70px;
+    line-height: 70px;
+    padding-left: 50px;
+    color: #707783;
+}
+
+.lines div:hover {
+    cursor: pointer;
+    color: #FFFFFF;
+}
+.modal-title{
+    text-align: center;
+}
+a{
+    text-decoration:none;
+}
+.modal-title{
+    color: #3d598a;
+}
+.one{
+    text-align: center;
+}
+/*  input {
+   background-color: #4CAF50; Green
+   border: none;
+   color: white;
+   padding: 15px 32px;
+   text-align: center;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 16px;
+}
+ */
+
+
+
+
+
+/* 从这里开始是本页的代码 */
+.big-box{
+	float: right; 
+	width: 75%;
+    /*  border: 1px solid red;  */
+/*     background: #fff; */
+	margin-top: 50px; 
+    margin-right:2%;
+}
+
+.content-left {
+/* 	display:inline */
+	float: left; 
+	width: 60%;
+    border: 1px solid white;
+    background: #fff;
+   /*  border: 1px solid red;  */
+    padding: 19px 18px;
+    box-shadow: 0px 6px 10px 5px rgba(217, 217, 217, .8);
+}
+.content-right {
+/* 	display:inline */
+	float: right; 
+	width: 35%;
+    border: 1px solid white;
+    background: #fff;
+    /* border: 1px solid red;  */
+    padding: 19px 18px;
+    box-shadow: 0px 6px 10px 5px rgba(217, 217, 217, .8);
+}

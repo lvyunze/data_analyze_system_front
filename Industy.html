@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="utf-8" />
+		<title>就业行业统计</title>
+		<link rel="stylesheet" href="css/page.css" />
+		<link rel="stylesheet" href="css/Industy.css" />
+		<script type="text/javascript" src="js/echarts.min.js"></script>
+		<link rel="stylesheet" href="bootstrap-fileinput-master/css/fileinput.min.css" />
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/index.js" ></script>
+		<script type="text/javascript" src="bootstrap-fileinput-master/js/fileinput.min.js" ></script>
+		<script type="text/javascript" src="bootstrap-fileinput-master/js/locales/zh.js" ></script>
+		<!-- 表格的链接 -->
+			<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+   $(function(){
+    $.ajax({
+	    url: 'http://127.0.0.1:5000/industrial_data/',
+        type: 'get',        
+        async:false,
+        success: function (data) {
+		   var strJSON = data
+		   var obj = new Function("return" + strJSON)();//转换后的JSON对象
+            var myChart = echarts.init(document.getElementById('main'));
+			
+		// 指定图表的配置项和数据
+		    $('#edu').html(obj.cal_pre.education);
+            $('#commer').html(obj.cal_pre.commercial_services);
+			$('#sport').html(obj.cal_pre.sports);
+			$('#wholesale').html(obj.cal_pre.wholesale);
+			$('#cul_art').html(obj.cal_pre.culture_art);
+			$('#retail').html(obj.cal_pre.retail);
+			$('#state_ins').html(obj.cal_pre.state_institution);
+			$('#pro').html(obj.cal_pre.professional_skill);
+			$('#research').html(obj.cal_pre.research);
+			
+			var option = {
+				title: {
+					text: '就业行业统计',
+				},
+				tooltip : {
+					trigger: 'item',     
+					
+					formatter:'{c}%'　　　　
+				},
+				toolbox: {
+					feature: {
+						saveAsImage: {}
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis : [
+					{
+						type : 'value'
+					}
+				],
+				yAxis : [
+					{
+						type : 'category',
+						axisTick : {show: false},
+						data : ['教育','商务服务业','软件和信息技术服务业','体育','批发业','文化艺术业','零售业','国家机构','专业技术服务业','研究和实验发展']
+					}
+				],
+				series : [
+					{
+						name:'收入',
+						type:'bar',
+						stack: '总量',
+						  //添加的内容
+						 itemStyle: {
+					normal: {
+					  label: {
+						show: true,
+						
+						position: 'right',//数据在中间显示
+					     formatter: '{c}%'
+					 
+					  }
+					}
+				  },
+				  //结束
+						 data:[obj.cal_to_pre.education, obj.cal_to_pre.commercial_services,obj.cal_to_pre.software, obj.cal_to_pre.sports,obj.cal_to_pre.wholesale , obj.cal_to_pre.culture_art,obj.cal_to_pre.retail ,obj.cal_to_pre.state_institution,obj.cal_to_pre.professional_skill, obj.cal_to_pre.research]
+					}
+				   
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);		   
+					  }
+				   
+				});
+});
+  
+
+</script>
+	</head>
+<body>
+	<div class="left">
+			<div class="bigTitle">招生就业统计分析</div>
+			<div class="lines">
+				<div  class="active"><img src="img/icon-1.png" /><a href="index.html" style="color: #FFF;text-decoration: none">首页</a></div>
+				<div ><img src="img/icon-4.png" /><a href="Regional1.html" style="color: #FFF;text-decoration: none">就业地区分布统计</a></div>
+				<div ><img src="img/icon-3.png" /><a href="Unit.html" style="color: #FFF;text-decoration: none">就业单位统计</a></div>
+				<div ><img src="img/icon-2.png" />就业行业统计</div>
+				<div ><img src="img/icon-5.png" /><a href="Occupation.html" style="color: #FFF;text-decoration: none">就业职业统计</a></div>
+			</div>
+		</div>
+	<div class="top">
+			<div class="leftTiyle" id="flTitle" >就业行业统计</div>
+			<div class="thisUser">当前用户：777</div>
+		</div>
+		<div class="big-box">
+			<div class="content-left">
+				<div id="main" style="width:95%;height:400px;"></div>
+
+			</div>
+			<div class="content-right">
+				<div style="width: 95%;height:400px;"><table class="table table-bordered">
+	<caption></caption>
+<!-- 	<thead>
+		<tr>
+			<th>软件与信息技术服务</th>
+			<th>城市</th>
+		</tr>
+	</thead> -->
+	<tbody>
+	    <tr>
+			<td>研究和实验发展</td>
+			<td id="research"></td>
+		</tr>
+		<tr>
+			<td>专业技术服务业</td>
+			<td id="pro"></td>
+		</tr>
+		<tr>
+			<td>国家机构</td>
+			<td id="state_ins"></td>
+		</tr>
+		<tr>
+			<td>零售业</td>
+			<td id="retail"></td>
+		</tr>
+		<tr>
+			<td>文化艺术业</td>
+			<td id="cul_art"></td>
+		</tr>
+		<tr>
+			<td>批发业</td>
+			<td id="wholesale"></td>
+		</tr>
+		<tr>
+			<td>体育</td>
+			<td id="sport"></td>
+		</tr>
+		<tr>
+			<td>商品服务业</td>
+			<td id="commer"></td>
+		</tr>
+		<tr>
+			<td>教育</td>
+			<td id="edu"></td>
+		</tr>		
+	</tbody>
+</table></div>
+			</div>
+		</div>		
+</body>
+</html>
