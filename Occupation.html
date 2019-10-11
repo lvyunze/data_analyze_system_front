@@ -19,9 +19,10 @@
 					type: 'get',
 					async: false,
 					success: function(data) {
-						var strJSON = data
-						var obj = new Function("return" + strJSON)(); //转换后的JSON对象  
-						console.log(obj.cal_num.business_service_workers);
+					    console.log(data);
+						var strJSON = data;
+
+						var obj = new Function("return" + strJSON)(); //转换后的JSON对象
 						$('#tech').html(obj.cal_pre.teaching_staff);
 						$('#eng').html(obj.cal_pre.engineering_technicians);
 						$('#bs').html(obj.cal_pre.business_service_workers);
@@ -32,7 +33,90 @@
 						$('#other_t').html(obj.cal_pre.other);
 						$('#press_p').html(obj.cal_pre.press_publications);
 						$('#worker').html(obj.cal_pre.worker);
+                        var myChart = echarts.init(document.getElementById('main'));
+                        option = {
+                            title: {
+                                text: '就业职业统计',
+                                left: 'center',
+                                top: 20,
+                                textStyle: {
+                                    color: '#ccc'
+                                }
+                            },
 
+                            tooltip : {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                            },
+                            toolbox: {
+                                feature: {
+                                    saveAsImage: {}
+                                }
+                            },
+
+                            visualMap: {
+                                show: false,
+                                min: 80,
+                                max: 600,
+                                inRange: {
+                                    colorLightness: [0, 1]
+                                }
+                            },
+                            series : [
+                                {
+                                    name:'访问来源',
+                                    type:'pie',
+                                    radius : '55%',
+                                    center: ['50%', '50%'],
+                                    data:[
+                                        {value:obj.cal_num.teaching_staff , name:'教学人员'},
+                                        {value:obj.cal_num.engineering_technicians, name:'工程技术人员'},
+                                        {value:obj.cal_num.business_service_workers,name:'商业与服务业人员'},
+                                        {value:obj.cal_num.civil_servant, name:'办事人员和有关人员'},
+                                        {value:obj.cal_num.conomic_personnel,name:'经济业务人员'},
+                                        {value:obj.cal_num.financial_service,name:'金融业务人员'},
+                                        {value:310, name:'文学艺术工作人员'},
+                                        {value:274, name:'其他专业技术人员'},
+                                        {value:235, name:'新闻出版和文化工作人员'},
+                                        {value:400, name:'公务员'}
+                                    ].sort(function (a, b) { return a.value - b.value; }),
+                                    roseType: 'radius',
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            /*position:'inside',*/
+                                            formatter: '{b}({d}%)' //自定义显示格式(b:name, c:value, d:百分比)
+                                        }
+
+                                    },
+                                    labelLine: {
+                                        normal: {
+                                            lineStyle: {
+                                                /*color: 'rgba(255, 255, 255, 0.3)'*/
+                                            },
+                                            /* smooth: 0.2,*/
+                                            length: 10,
+                                            length2: 20
+                                        }
+                                    },
+                                    itemStyle: {
+                                        normal: {
+                                            /*color: '#c23531',*/
+                                            /*shadowBlur: 200,*/
+                                            /* shadowColor: 'rgba(0, 0, 0, 0.5)'*/
+                                        }
+                                    },
+
+                                    animationType: 'scale',
+                                    animationEasing: 'elasticOut',
+                                    animationDelay: function (idx) {
+                                        return Math.random() * 200;
+                                    }
+                                }
+                            ]
+                        };
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
 					}
 
 				})
@@ -126,90 +210,7 @@
 
 		<script type="text/javascript">
 		 // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
-        option = {
-    title: {
-        text: '就业职业统计',
-        left: 'center',
-        top: 20,
-        textStyle: {
-            color: '#ccc'
-        }
-    },
 
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    toolbox: {
-				feature: {
-						saveAsImage: {}
-					}
-				},
-
-    visualMap: {
-        show: false,
-        min: 80,
-        max: 600,
-        inRange: {
-            colorLightness: [0, 1]
-        }
-    },
-    series : [
-        {
-            name:'访问来源',
-            type:'pie',
-            radius : '55%',
-            center: ['50%', '50%'],
-            data:[
-                {value:335, name:'教学人员'},
-                {value:310, name:'工程技术人员'},
-                {value:274, name:'商业与服务业人员'},
-                {value:235, name:'办事人员和有关人员'},
-                {value:400, name:'经济业务人员'},
-                {value:335, name:'金融业务人员'},
-                {value:310, name:'文学艺术工作人员'},
-                {value:274, name:'其他专业技术人员'},
-                {value:235, name:'新闻出版和文化工作人员'},
-                {value:400, name:'公务员'}
-            ].sort(function (a, b) { return a.value - b.value; }),
-            roseType: 'radius',
-            label: {
-                normal: {
-                    show: true,
-                    /*position:'inside',*/
-                    formatter: '{b}({d}%)' //自定义显示格式(b:name, c:value, d:百分比)
-                }
-
-            },
-            labelLine: {
-                normal: {
-                    lineStyle: {
-                        /*color: 'rgba(255, 255, 255, 0.3)'*/
-                    },
-                   /* smooth: 0.2,*/
-                    length: 10,
-                    length2: 20
-                }
-            },
-            itemStyle: {
-                normal: {
-                    /*color: '#c23531',*/
-                    /*shadowBlur: 200,*/
-                   /* shadowColor: 'rgba(0, 0, 0, 0.5)'*/
-                }
-            },
-
-            animationType: 'scale',
-            animationEasing: 'elasticOut',
-            animationDelay: function (idx) {
-                return Math.random() * 200;
-            }
-        }
-    ]
-};
-			// 使用刚指定的配置项和数据显示图表。
-					myChart.setOption(option);
 		</script>
 
 	</body>
