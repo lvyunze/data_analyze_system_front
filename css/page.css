@@ -5,14 +5,12 @@ body {
 
  .left {
 	background: #313541;
+	width: 20%;
 	float: left;
 	top: 0px;
-	bottom: 0px;
-	width: 20%; 
-}
-.lines{
-/* 	height: 800px; */
-}
+	bottom: 0px;  
+} 
+
 .top {
 	width: 80%;
 	float: right;
