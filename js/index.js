@@ -1,3 +1,9 @@
+$(document).ready(function(){
+  
+    var txt= $(window).height();
+    $("#result").height(txt);
+});
+
 function pageClick(k) {
 	$(k).parent().find("div").removeClass("active");
 	$(k).addClass("active");

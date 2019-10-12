@@ -6,6 +6,9 @@
 		<title>首页</title>
 		<link rel="stylesheet" href="css/page.css" />
 		<link rel="stylesheet" href="bootstrap-fileinput-master/css/fileinput.min.css" />
+		<!-- JQ -->
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+		</script>
 		<script type="text/javascript" src="js/jquery.min.js" ></script>
 		<script type="text/javascript" src="js/index.js" ></script>
 		<script type="text/javascript" src="bootstrap-fileinput-master/js/fileinput.min.js" ></script>
@@ -13,9 +16,16 @@
 	</head>
 
 	<body>
-		<div class="left">
+	<!-- <script>
+	$(document).ready(function(){
+	  
+	    var txt= $(window).height();
+	    $("#result").height(txt);
+	});
+	</script> -->
+		<div id="result" class="left">
 			<div class="bigTitle">招生就业统计分析</div>
-			<div class="lines">
+			<div  class="lines">
 				<div  class="active"><img src="img/icon-1.png" />首页</div>
 				<div> <img src="img/icon-4.png" /><a href="Regional1.html" style="color: #FFF;text-decoration: none">就业地区分布统计</a></div>
 				<div ><img src="img/icon-3.png" /><a href="Unit.html" style="color: #FFF;text-decoration: none">就业单位统计</a></div>

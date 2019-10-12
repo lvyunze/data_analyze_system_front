@@ -5,161 +5,27 @@
 	<title>就业单位统计</title>
 	<!-- <link rel="stylesheet" href="css/page.css" /> -->
 	<link rel="stylesheet" href="css/Unit.css" />
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+        </script>
 		<script type="text/javascript" src="js/jquery.min.js" ></script>
 		<script type="text/javascript" src="js/index.js" ></script>
 		<script type="text/javascript" src="js/echarts.min.js"></script>
+        <script type="text/javascript" src="js/daohang1.js" ></script>
        <!--  链接表格 -->
        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        $(function(){
-            $.ajax({
-                url: 'http://127.0.0.1:5000/regional_data/',
-                type: 'get',
-                async:false,
-                success: function (data) {
-                    var strJSON = data;
-                    var obj = new Function("return" + strJSON)();//转换后的JSON对象
-                    console.log(data);
-                    $('#my').html(obj.cal_pre.state_owned_enterprise);
-                    $('#gy').html(obj.cal_pre.mass_run_enterprises);
-                    $('#sz').html(obj.cal_pre.three_kinds_of_investment_enterprise);
-                    var myChart = echarts.init(document.getElementById('main'));
-                    // 指定图表的配置项和数据
-                    option = {
-                        title : {
-                            text: '就业单位规模分布',
-                            x:'center'
-                        },
-                        tooltip : {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b} : {c} ({d}%)"
-                        },
-                        toolbox: {
-                            feature: {
-                                saveAsImage: {}
-                            }
-                        },
-                        legend: {
-                            orient: 'vertical',
-                            left: 'left',
-                            data: ['1000人以上','50人以下','51-200人']
-                        },
-                        series : [
-                            {
-                                name: '规模人数占比',
-                                type: 'pie',
-                                radius : '55%',
-                                center: ['50%', '60%'],
-                                data:[
-                                    {value:obj.cal_num.mass_run_enterprises, name:'民营企业'},
-                                    {value:obj.cal_num.state_owned_enterprise, name:'国营企业'},
-                                    {value:obj.cal_num.three_kinds_of_investment_enterprise, name:'三资企业'}
-                                ],
-                                label: {
-                                    normal: {
-                                        show: true,
-                                        /*position:'inside',*/
-                                        formatter: '{b}({d}%)' //自定义显示格式(b:name, c:value, d:百分比)
-                                    }
-
-                                },
-                                itemStyle: {
-                                    emphasis: {
-                                        shadowBlur: 10,
-                                        shadowOffsetX: 0,
-                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                    }
-                                }
-                            }
-                        ]
-                    };
-
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option);
-
-                }
-            });
-            $.ajax({
-                url: 'http://127.0.0.1:5000/unit_data/',
-                type: 'get',
-                async:false,
-                success: function (data) {
-                    var strJSON = data;
-                    var obj = new Function("return" + strJSON)();//转换后的JSON对象
-                    console.log(data);
-                    $('#qy').html(obj.cal_pre.enterprise);
-                    $('#yl').html(obj.cal_pre.health_care);
-                    $('#other').html(obj.cal_pre.other_institutions);
-                    $('#zcjy').html(obj.cal_pre.primary_school_education_unit);
-                    $('#kysjdw').html(obj.cal_pre.scientific);
-                    $('#gjjg').html(obj.cal_pre.state_organs);
-                    $('#bd').html(obj.cal_pre.troops);
-                    // $('#my').html(obj.cal_pre.state_owned_enterprise);
-                    var myChart = echarts.init(document.getElementById('main1'));
-                    // 指定图表的配置项和数据
-                    option = {
-                        title: {
-                            text: '就业单位统计',
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'shadow'
-                            }
-                        },
-                        toolbox: {
-                            feature: {
-                                saveAsImage: {}
-                            }
-                        },
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis: {
-                            type: 'value',
-                            boundaryGap: [0, 0.1]
-                        },
-                        yAxis: {
-                            type: 'category',
-                            data: ['企业','医疗','其他','中初教育单位','科研设计单位','国家机关','部队']
-                        },
-                        series: [
-
-                            {
-                                name: '总人数',
-                                type: 'bar',
-                                //添加的内容
-                                itemStyle: {
-                                    normal: {
-                                        label: {
-                                            show: true,
-                                            position: 'right',//数据在中间显示
-                                            formatter: '{c}%'//百分比显示
-                                        }
-                                    }
-                                },
-                                //结束
-                                data: [obj.cal_to_pre.enterprise,obj.cal_to_pre.health_care,obj.cal_to_pre.other_institutions,obj.cal_to_pre.primary_school_education_unit,obj.cal_to_pre.scientific, obj.cal_to_pre.state_organs, obj.cal_to_pre.troops]
-
-                            }
-                        ]
-                    };
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option);
-                    // 基于准备好的dom，初始化echarts实例
-                }
-            })
-        })
-    </script>
 </head>
 <body>
+<script>
+$(document).ready(function(){
+  
+    var txt= $(document).height();
+    $("#result").height(txt);
+});
+</script>
 <div>
-<div class="left">
+<div class="left" id="result">
 			<div class="bigTitle">招生就业统计分析</div>
 			<div class="lines">
 				<div  class="active"><img src="img/icon-1.png" /><a href="index.html" style="color: #FFF;text-decoration: none">首页</a></div>
@@ -188,15 +54,15 @@
     <tbody>
         <tr class="active">
             <td>民营企业</td>
-            <td id="my"></td>
+            <td></td>           
         </tr>
         <tr class="success">
             <td>国有企业</td>
-            <td  id="gy"></td>
+            <td></td>
         </tr>
         <tr  class="warning">
             <td>三资企业</td>
-            <td id="sz"></td>
+            <td></td>
         </tr>
     </table></div>
     </div>
@@ -215,36 +81,34 @@
     <tbody>
         <tr>
             <td>企业</td>
-            <td id="qy"></td>
+            <td></td>
         </tr>
         <tr>
             <td>医疗</td>
-            <td id="yl"></td>
+            <td></td>
         </tr>
         <tr>
             <td>其他</td>
-            <td id="other"></td>
+            <td></td>
         </tr>
         <tr>
             <td>中初教育单位</td>
-            <td id="zcjy"></td>
+            <td></td>
         </tr>
         <tr>
             <td>科研设计单位</td>
-            <td id="kysjdw"></td>
+            <td></td>
         </tr>
         <tr>
             <td>国家机关</td>
-            <td id="gjjg"></td>
+            <td></td>
         </tr>
         <tr>
             <td>部队</td>
-            <td id="bd"></td>
+            <td></td>
         </tr>
     </tbody>
-</table>
-
-                   </div>
+</table></div>
                    </div> 
                 
             </div>
@@ -252,6 +116,118 @@
 </div><!-- 父地v -->
      	<script type="text/javascript">
      	 // 基于准备好的dom，初始化echarts实例
+     var myChart = echarts.init(document.getElementById('main1'));
+        // 指定图表的配置项和数据
+        option = {
+    title: {
+        text: '就业单位统计',
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.1]
+    },
+    yAxis: {
+        type: 'category',
+        data: ['企业','医疗','其他','中初教育单位','科研设计单位','国家机关','部队']
+    },
+    series: [
+       
+        {
+            name: '总人数',
+            type: 'bar',
+            //添加的内容
+             itemStyle: {
+        normal: {
+          label: {
+            show: true,
+            position: 'right',//数据在中间显示
+           formatter: '{c}'//百分比显示
+          }
+        }
+      },
+      //结束
+            data: [325, 288, 270, 294, 241, 207, 194]
+           
+        }
+    ]
+};
+
+        
+ // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+
+         // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        option = {
+    title : {
+        text: '就业单位规模分布',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['1000人以上','50人以下','51-200人']
+    },
+    series : [
+        {
+            name: '规模人数占比',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:335, name:'1000人以上'},
+                {value:310, name:'50人以下'},
+                {value:234, name:'51-200人'}              
+            ],
+             label: {
+                normal: {
+                    show: true,
+                    /*position:'inside',*/
+                    formatter: '{b}({d}%)' //自定义显示格式(b:name, c:value, d:百分比)
+                }
+
+            },
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+};
+
+ // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
 
 
 
